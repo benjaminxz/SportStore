@@ -1,0 +1,56 @@
+﻿@*@model  IEnumerable<Product>
+
+    @{
+        ViewBag.Title = "Products";
+    }
+
+    @foreach (var p in Model) {
+        <div >
+            <h3>@p.Name</h3>
+            @p.Description
+            <h4>@p.Price.ToString("c")</h4>
+
+
+        </div>
+
+    }*@
+
+
+@*@model WebII.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@foreach (var p in Model.Products)
+{
+    <div>@p.Name</div>
+    <div>
+        @p.Description
+    </div>
+    <div>
+        @p.Price.ToString("c")
+    </div>
+}
+
+<div>
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>*@
+
+
+@model WebII.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@foreach (var p in Model.Products)
+{
+    @Html.Partial("ProductSummary", p)
+}
+
+<div class="pager">
+    @*@Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))*@
+
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x ,category=Model.CurrentCategory}))
+</div>
